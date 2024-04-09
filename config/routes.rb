@@ -14,4 +14,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root to: "home#index"
+
+  # Defines the route for the home controller's index action ("/home/index")
+  post "refresh", controller: :refresh, action: :create
+  post "signin", controller: :signin, action: :create
+  post "signup", controller: :signup, action: :create
+  delete "signin", controller: :signin, action: :destroy
+
 end
