@@ -1,6 +1,7 @@
 <script setup>
 import { onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
+import Header from './components/Header.vue';
 
 const router = useRouter()
 
@@ -11,6 +12,7 @@ onBeforeMount(() => {
 
 <template>
   <div id="app">
+    <Header />
     <router-view />
   </div>
 </template>
