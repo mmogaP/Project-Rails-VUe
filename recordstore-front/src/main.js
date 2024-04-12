@@ -4,6 +4,7 @@ import { securedAxiosInstance, plainAxiosInstance } from './backend/axios'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import router from './router'
+import './style.css'
 
 const app = createApp(App)
 
