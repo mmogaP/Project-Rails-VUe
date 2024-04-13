@@ -23,7 +23,7 @@
         <ul class="list-reset mt-4">
             <li class="py-4" v-for="artist in artists" :key="artist.id" :artist="artist">
                 <div class="flex items-center justify-between flex-wrap">
-                    <p class="block flex-1 font-mono font-semibold flex items-center">
+                    <p class="block flex-1 font-mono font-semibold items-center">
                         {{ artist.name }}
                     </p>
 
@@ -80,7 +80,7 @@
                 if (!value) {
                     return
                 }
-                this.$http.secured.post('/api/v1/artits' { artist: { name: this.newArtist.name } })
+                this.$http.secured.post('/api/v1/artits', { artist: { name: this.newArtist.name } })
                     .then(response => {
                         this.artists.push(response.data);
                         this.newArtist = '';
