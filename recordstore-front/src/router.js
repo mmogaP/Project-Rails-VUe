@@ -7,7 +7,7 @@ import Records from './components/records/Records.vue'
 const routes = [
   { path: '/', component: Signin },
   { path: '/signup', component: Signup },
-  { path: '/artist', component: Artists },
+  { path: '/artists', component: Artists },
   { path: '/records', component: Records}
 ]
 

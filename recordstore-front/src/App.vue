@@ -13,6 +13,6 @@ onBeforeMount(() => {
 <template>
   <div id="app">
     <Header />
-    <router-view />
+    <router-view class="mx-4"/>
   </div>
 </template>

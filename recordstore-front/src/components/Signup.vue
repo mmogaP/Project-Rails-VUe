@@ -51,8 +51,14 @@ export default {
     this.checkedSignedIn()
   },
   methods: {
-    signup () {
-      this.$http.plain.post('/signup', { email: this.email, password: this.password, password_confirmation: this.password_confirmation })
+    signup() {
+      const data = {
+        email: this.email,
+        password: this.password,
+        password_confirmation: this.password_confirmation
+      }
+      console.log(data)
+      this.$axios.plain.post('/signup', data)
         .then(response => this.signupSuccessful(response))
         .catch(error => this.signupFailed(error))
     },

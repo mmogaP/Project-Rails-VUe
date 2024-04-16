@@ -7,48 +7,30 @@ import { default } from '../artists/Artists.vue';
         <form @submit.prevent="addRecord">
             <div class="mb-6">
                 <label for="record_title" class="block text-gray-700 text-sm font-bold mb-2">Title</label>
-                <input 
-                    type="text" 
-                    id="record_title" 
-                    class="w-full p-2 border border-gray-300 rounded" 
-                    autofocus
-                    autocomplete="off" 
-                    placeholder="Type a record title"
-                    v-model="newRecord.title"
-                >
+                <input type="text" id="record_title" class="w-full p-2 border border-gray-300 rounded" autofocus
+                    autocomplete="off" placeholder="Type a record title" v-model="newRecord.title">
             </div>
-            
+
             <div class="mb-6">
                 <label for="record_year" class="block text-gray-700 text-sm font-bold mb-2">Year</label>
-                <input 
-                    type="text" 
-                    id="record_year" 
-                    class="w-full p-2 border border-gray-300 rounded" 
-                    autofocus
-                    autocomplete="off" 
-                    placeholder="Year"
-                    v-model="newRecord.year"
-                >
+                <input type="text" id="record_year" class="w-full p-2 border border-gray-300 rounded" autofocus
+                    autocomplete="off" placeholder="Year" v-model="newRecord.year">
             </div>
 
             <div class="mb-6">
                 <label for="artist" class="block text-gray-700 text-sm font-bold mb-2">Artist</label>
-                <select 
-                    id="artist" 
-                    class="w-full p-2 border border-gray-300 rounded" 
-                    v-model="newRecord.artist">
+                <select id="artist" class="w-full p-2 border border-gray-300 rounded" v-model="newRecord.artist">
 
                     <option disabled value="">Select an artist</option>
                     <option :value="artist.id" v-for="artist in artists" :key="artist.id">{{ artist.name }}</option>
 
                 </select>
-                <p class="pt-4">Don't see an artist? <router-link to="/artists" class="text-blue-500 hover:text-blue-700">Add a new artist</router-link></p>
+                <p class="pt-4">Don't see an artist? <router-link to="/artists"
+                        class="text-blue-500 hover:text-blue-700">Add a new artist</router-link></p>
             </div>
 
-            <input type="submit"
-                value="Add Record"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
-            >
+            <input type="submit" value="Add Record"
+                class="font-sans font-bold px-4 rounded cursor-pointer no-underline bg-green-400 hover:bg-green-800 block w-full py-4 text-white justify-center">
         </form>
 
         <hr class="border border-gray-300 my-6">
@@ -57,7 +39,8 @@ import { default } from '../artists/Artists.vue';
             <li class="py-4" v-for="record in records" :key="record.id" :record="record">
                 <div class="flex items-center justify-between flex-wrap">
                     <div class="flex-1 flex justify-between flex-wrap pr-4">
-                        <p class="block font-mono font-semibold items-center">{{ record.title }} &mdash; {{ record.year }}</p>
+                        <p class="block font-mono font-semibold items-center">{{ record.title }} &mdash; {{ record.year
+                            }}</p>
                         <p class="block font-mono font-semibold">{{ getArtist(record) }}</p>
                     </div>
 
@@ -75,28 +58,21 @@ import { default } from '../artists/Artists.vue';
 
                             <div class="mb-6">
                                 <label class="block text-gray-700 text-sm font-bold mb-2">Title</label>
-                                <input
-                                    class="w-full p-2 border border-gray-300 rounded"
-                                    v-model="record.title"
-                                >
+                                <input class="w-full p-2 border border-gray-300 rounded" v-model="record.title">
                             </div>
 
                             <div class="mb-6">
                                 <label class="block text-gray-700 text-sm font-bold mb-2">Year</label>
-                                <input
-                                    class="w-full p-2 border border-gray-300 rounded"
-                                    v-model="record.year"
-                                >
+                                <input class="w-full p-2 border border-gray-300 rounded" v-model="record.year">
                             </div>
 
                             <div class="mb-6">
-                                <select 
-                                    id="artist_update" 
-                                    class="w-full p-2 border border-gray-300 rounded" 
+                                <select id="artist_update" class="w-full p-2 border border-gray-300 rounded"
                                     v-model="record.artist">
 
                                     <option disabled value="">Select an artist</option>
-                                    <option :value="artist.id" v-for="artist in artists" :key="artist.id">{{ artist.name }}</option>
+                                    <option :value="artist.id" v-for="artist in artists" :key="artist.id">{{ artist.name
+                                        }}</option>
 
                                 </select>
                             </div>
@@ -135,11 +111,11 @@ export default {
         if (!localStorage.signedIn) {
             this.$router.replace('/');
         } else {
-            this.$http.secured.get('/api/v1/records')
+            this.$axios.secured.get('/api/v1/records')
                 .then(response => this.records = response.data)
                 .catch(error => this.setError(error, 'Cannot load records'));
 
-            this.$http.secured.get('/api/v1/artists')
+            this.$axios.secured.get('/api/v1/artists')
                 .then(response => this.artists = response.data)
                 .catch(error => this.setError(error, 'Cannot load artists'));
         }
@@ -162,15 +138,15 @@ export default {
             if (!value) {
                 return
             }
-            this.$http.secured.post('/api/v1/records', { record: { title: this.newRecord.title, year: this.newRecord.year, artist_id: this.newRecord.artist } })
+            this.$axios.secured.post('/api/v1/records', { record: { title: this.newRecord.title, year: this.newRecord.year, artist_id: this.newRecord.artist } })
                 .then(response => {
                     this.records.push(response.data);
-                    this.newRecord = '';
+                    this.newRecord = { title: '', year: '', artist: '' };
                 })
                 .catch(error => this.setError(error, 'Cannot add record'));
         },
         removeRecord(record) {
-            this.$http.secured.delete(`/api/v1/records/${record.id}`)
+            this.$axios.secured.delete(`/api/v1/records/${record.id}`)
                 .then(response => {
                     this.records.splice(this.records.indexOf(record), 1);
                 })
@@ -181,7 +157,7 @@ export default {
         },
         updateRecord(record) {
             this.editRecord = '';
-            this.$http.secured.patch(`/api/v1/records/${record.id}`, { record: { title: record.title, year: record.year, artist_id: record.artist } })
+            this.$axios.secured.patch(`/api/v1/records/${record.id}`, { record: { title: record.title, year: record.year, artist_id: record.artist } })
                 .catch(error => this.setError(error, 'Cannot update record'));
         }
     }

@@ -65,7 +65,7 @@
             if (!localStorage.signedIn) {
                 this.$router.replace('/');
             } else {
-                this.$http.secured.get('/api/v1/artists')
+                this.$axios.secured.get('/api/v1/artists')
                     .then(response => this.artists = response.data)
                     .catch(error => this.setError(error, 'Cannot load artists'));
             }
@@ -80,7 +80,7 @@
                 if (!value) {
                     return
                 }
-                this.$http.secured.post('/api/v1/artits', { artist: { name: this.newArtist.name } })
+                this.$axios.secured.post('/api/v1/artists', { artist: { name: this.newArtist.name } })
                     .then(response => {
                         this.artists.push(response.data);
                         this.newArtist = '';
@@ -88,7 +88,7 @@
                     .catch(error => this.setError(error, 'Cannot add artist'));
             },
             removeArtist(artist) {
-                this.$http.secured.delete(`/api/v1/artists/${artist.id}`)
+                this.$axios.secured.delete(`/api/v1/artists/${artist.id}`)
                     .then(response => {
                         this.artists.splice(this.artists.indexOf(artist), 1);
                     })
@@ -99,7 +99,7 @@
             },
             updateArtist(artist) {
                 this.editedArtist = '';
-                this.$http.secured.patch(`/api/v1/artists/${artist.id}`, { artist: { title: artist.name } })
+                this.$axios.secured.patch(`/api/v1/artists/${artist.id}`, { artist: { title: artist.name } })
                     .catch(error => this.setError(error, 'Cannot update artist'));
             }
         }
